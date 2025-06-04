@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  session-node:
+    build:
+      context: .
+    restart: unless-stopped
+    ports:
+      - "11022:11022" # blockchain syncing
+      - "11025:11025" # session node to session node
+    volumes:
+      - session-node-data:/var/lib/oxen
+      - ./oxen.conf:/etc/oxen/oxen.conf
+      # - session-node-config:/etc/oxen
+
+volumes:
+  session-node-data:
+  # session-node-config:

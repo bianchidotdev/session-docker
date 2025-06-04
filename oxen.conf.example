@@ -1,0 +1,8 @@
+data-dir=/var/lib/oxen
+log-file=/var/log/oxen/oxen.log
+
+service-node=1
+service-node-public-ip=0.0.0.0
+
+l2-provider=https://arb1.arbitrum.io/rpc
+l2-provider=https://backup.example.com

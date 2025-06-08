@@ -5,6 +5,7 @@ echo "Starting Session Node..."
 
 echo "$@"
 oxend \
+    --config /etc/oxen/oxen.conf \
     --non-interactive \
     "$@"
 

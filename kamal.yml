@@ -1,0 +1,43 @@
+accessories:
+  session-node:
+    service: session-node
+    image: michaeldbianchi/session-node
+    hosts:
+      - 192.168.1.213 # bonkymini
+    # kamal doesn't allow publishing multiple ports in a standard way
+    # so we use the `options` key to pass raw command line options to the
+    # docker run command.
+    # port:
+    #   "11022:11022" # blockchain syncing
+    # - "11025:11025" # session node to session node
+
+    # kamal doesn't support passing volume modifiers like `:z` directly,
+    # so we use the files key to copy over the oxen.conf file, but then
+    # use the options key to specify the volume with the `:z` modifier.
+    files:
+      - ./oxen.conf:/etc/oxen/oxen.conftmp
+    # data dir
+    volumes:
+      - /var/home/core/data/session:/var/lib/oxen:z
+
+    options:
+      publish:
+        - "11022:11022" # blockchain syncing
+        - "11025:11025" # session node to session node
+      volume: "${PWD}/session-node/etc/oxen/oxen.conftmp:/etc/oxen/oxen.conf:z"
+
+    proxy: false
+
+# required for kamal to work
+service: dummy
+# we use the same image so we can use the kamal image build config
+image: michaeldbianchi/session-node
+
+ssh:
+  user: core
+registry:
+  username: michaeldbianchi
+  password:
+    - DOCKER_PAT
+builder:
+  arch: amd64

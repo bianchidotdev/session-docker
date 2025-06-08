@@ -1,0 +1,18 @@
+[tools]
+ruby = "latest"
+
+[tasks.setup]
+run = [
+  "kamal build -c kamal.yml push",
+  "kamal accessory -c kamal.yml boot session-node",
+]
+
+[tasks.deploy]
+run = [
+  "kamal build -c kamal.yml push",
+  "kamal server exec -c kamal.yml docker pull michaeldbianchi/session-node:latest",
+  "kamal accessory -c kamal.yml reboot session-node",
+]
+
+[tasks.logs]
+run = "kamal accessory -c kamal.yml logs session-node -f"
